@@ -8,6 +8,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * 2. implementing custom -> AuthenticationManager, AuthenticationProvider, Authentication
  * 3. exception handling for filters and logging
  * */
+
+/**
+ * tip: when you create UserDetailsService and UserDetails,
+ * 		Spring Security creates AuthenticationManager and AuthenticationProvider by default
+ * */
 @SpringBootApplication
 public class SpringSecurityApplication {
 
