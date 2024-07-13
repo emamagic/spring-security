@@ -1,8 +1,6 @@
 spring:
   application:
     name: spring-security
-#  security:
-#    user:
-#      name: emamagic
-#      password: 1234
+
+secret_token: secret_token
 

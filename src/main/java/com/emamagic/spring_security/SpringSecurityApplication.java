@@ -4,8 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 1. we can create new user by implementing UserDetails and UserDetailsService
- * 2. implementing PasswordEncoder
+ * 1. implement our custom Authentication
+ * 2. implementing custom -> AuthenticationManager, AuthenticationProvider, Authentication
+ * 3. exception handling for filters and logging
  * */
 @SpringBootApplication
 public class SpringSecurityApplication {

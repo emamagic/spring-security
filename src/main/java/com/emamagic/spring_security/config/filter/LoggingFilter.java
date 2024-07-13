@@ -5,28 +5,21 @@ import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
+@Slf4j
 @Component
-public class SecurityContextLoggingFilter extends HttpFilter {
-
-    private static final Logger logger = LoggerFactory.getLogger(SecurityContextLoggingFilter.class);
+public class LoggingFilter extends HttpFilter {
 
     @Override
     protected void doFilter(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws IOException, ServletException {
-        // Log SecurityContext before processing the request
-        logger.info("Before chain.doFilter: SecurityContext={}", SecurityContextHolder.getContext());
-
-        // Continue processing the request
+        log.info("Before chain.doFilter: SecurityContext={}", SecurityContextHolder.getContext());
         chain.doFilter(request, response);
-
-        // Log SecurityContext after processing the request
-        logger.info("After chain.doFilter: SecurityContext={}", SecurityContextHolder.getContext());
+        log.info("After chain.doFilter: SecurityContext={}", SecurityContextHolder.getContext());
     }
 }

@@ -1,15 +1,15 @@
-package com.emamagic.spring_security.exception;
+package com.emamagic.spring_security.config.filter;
 
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
-import jakarta.servlet.annotation.WebFilter;
 import jakarta.servlet.http.HttpFilter;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.stereotype.Component;
 
 import java.io.IOException;
 
-@WebFilter("/*")
+@Component
 public class ExceptionHandlerFilter extends HttpFilter {
 
     @Override

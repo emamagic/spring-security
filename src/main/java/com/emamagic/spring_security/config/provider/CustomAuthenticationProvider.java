@@ -7,27 +7,26 @@ import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 @RequiredArgsConstructor
 @Component
-public class CustomProvider implements AuthenticationProvider {
+public class CustomAuthenticationProvider implements AuthenticationProvider {
 
-    @Value("security_token")
-    private final String securityToken;
-    private final UserDetailsService userDetailsService;
+    @Value("${secret_token}")
+    private String secretToken;
 
     @Override
     public Authentication authenticate(Authentication authentication) throws AuthenticationException {
         var authReq = (CustomAuthentication) authentication;
-        String tokenReq = (String) authReq.getCredentials();
-        if (tokenReq.equals(securityToken)) {
-            UserDetails userDetails = userDetailsService.loadUserByUsername((String) authReq.getPrincipal());
-            return new CustomAuthentication(userDetails);
+        String tokenReq = authReq.getToken();
+        if (tokenReq.equals(secretToken)) {
+            // userDetailSvc.loadUserDetailsService()
+            var auth = new CustomAuthentication(null);
+            auth.setAuthenticated(true);
+            return auth;
         }
-        throw new BadCredentialsException("Oh, No!");
+        throw new BadCredentialsException("Oh, No! Token is not Valid");
     }
 
     @Override
