@@ -29,4 +29,39 @@ public class SecurityConfig {
     }
 
 
+//    @Bean
+//    public BCryptPasswordEncoder bCryptPasswordEncoder() {
+//        return  new BCryptPasswordEncoder();
+//    }
+
+//    @Bean
+//    public AuthenticationProvider authenticationProvider(UserService userSvc, BCryptPasswordEncoder passwordEncoder) {
+//        DaoAuthenticationProvider authProvider = new DaoAuthenticationProvider();
+//        authProvider.setUserDetailsService(userSvc);
+//        authProvider.setPasswordEncoder(passwordEncoder);
+//        return authProvider;
+//    }
+
+//    @Bean
+//    public AuthenticationManager authenticationManager(
+//            HttpSecurity http,
+//            CustomAuthenticationProvider authProvider) throws Exception {
+//
+//        AuthenticationManagerBuilder authenticationManagerBuilder = http
+//                .getSharedObject(AuthenticationManagerBuilder.class);
+//        authenticationManagerBuilder.authenticationProvider(authProvider);
+//        return authenticationManagerBuilder.build();
+//    }
+
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationProvider provider) {
+//        return new ProviderManager(provider);
+//    }
+
+//    @Bean
+//    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
+//        return configuration.getAuthenticationManager();
+//    }
+
+
 }
