@@ -6,11 +6,11 @@ import com.emamagic.spring_security.config.provider.ApiKeyAuthenticationProvider
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.ProviderManager;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -21,7 +21,6 @@ import org.springframework.security.web.authentication.www.BasicAuthenticationFi
 import static org.springframework.security.config.Customizer.withDefaults;
 
 @Slf4j
-@EnableWebSecurity
 @Configuration
 public class SecurityConfig {
 
@@ -31,23 +30,33 @@ public class SecurityConfig {
             ApiKeyAuthenticationFilter apiKeyAuthenticationFilter) throws Exception {
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest()
-                        .authenticated())
+                        .requestMatchers(HttpMethod.GET,"/test1", "/test1.1").authenticated()
+                        .requestMatchers("/test2").hasAuthority("read")
+                        .anyRequest().permitAll()
+                )
                 .httpBasic(withDefaults())
                 .addFilterBefore(apiKeyAuthenticationFilter, BasicAuthenticationFilter.class)
                 .exceptionHandling(ex ->
                         ex.authenticationEntryPoint(new AuthenticationException())
                 )
                 .build();
+
+        // matcher method + authorization rule
+        // 1. which matcher methods should you use and how ( anyRequest(), mvcMatchers(), antMatchers(), regexMatchers() )
+        // 2. how to apply different authorization roles
     }
 
     @Bean
     public UserDetailsService userDetailsService() {
-        UserDetails user = User
-                .withUsername("ema")
+        UserDetails emaUser = User.withUsername("ema")
                 .password("{noop}1234")
+                .authorities("read")
                 .build();
-        return new InMemoryUserDetailsManager(user);
+        UserDetails billUser = User.withUsername("bill")
+                .password("{noop}1234")
+                .authorities("write")
+                .build();
+        return new InMemoryUserDetailsManager(emaUser, billUser);
     }
 
     @Bean
