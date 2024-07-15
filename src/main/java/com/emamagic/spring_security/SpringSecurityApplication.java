@@ -4,10 +4,9 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
 /**
- * 1. using custom Authentication, and default Authentication at the same time
- * 2. using AbstractAuthenticationToken instead of Authentication
- * 3. adding AuthenticationEntryPoint for exception handling
- * 3. AbstractAuthenticationProcessingFilter -> custom authentication base on custom url [UsernamePasswordAuthentication inherited from this filter]
+ * 1. using @PreAuthorize()  method level authentication [previous we used endpoint level authorization]
+ * 2. @PreAuthorize() @PostAuthorize() @PreFilter() @PostFilter()
+ * 3. endpoint(filter) level does on filters before controllers but method level does on controller (ASPECT)
  * */
 
 @SpringBootApplication
